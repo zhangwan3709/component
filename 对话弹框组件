@@ -1,0 +1,155 @@
+<template>
+  <div class="shadow-wrapper" v-if="visible" @click.stop ref="mask"><!-- 遮罩层 -->
+    <div class="dialog-wrapper">                                    <!-- 对话框 -->
+     <div class="title">{{title}}</div>
+	  <div class="info-wrapper">                                    <!-- 对话框内容部分 -->
+        <!-- <img class="icon" :src="require(`../common/images/${icon}-circle.png`)"> -->
+        <div class="text">{{info}}</div>
+      </div>
+      <div class="btn-wrapper">                                     <!-- 对话框按钮部分 -->
+        <div class="btn_cancle" @click="onCancel">{{cancelText}}</div>
+        <div class="btn_ok" @click="onOk">{{okText}}</div>
+      </div>
+    </div>    
+  </div>
+</template>
+
+<script>
+	export default {
+		name:"submitDialog",
+		props: {
+		    mask: { /* 控制遮罩 */
+		      type: Boolean,
+		      default: false
+		    },
+		    icon: { /* 图标类型 */
+		      type: String,
+		      default: 'info'
+		    },
+			title: { /* 标题 */
+			  type: String,
+			  default: '标题'
+			},
+		    info: { /* 文字内容 */
+		      type: String,
+		      default: '内容'
+		    },
+		    cancelText: { /* 取消按钮文字 */
+		      type: String,
+		      default: ''
+		    },
+		    okText: { /* 确认按钮文字 */
+		      type: String,
+		      default: ''
+		    }
+		  },
+		  data () {
+		    return {
+		      visible: true /* 控制对话框显示 */
+		    }
+		  },
+		  mounted () {
+		    setTimeout(() => { /* 确保能获取到mask修改其背景属性 */
+		      if (this.mask) {
+		        this.$refs.mask.style.background = 'rgba(0,0,0,.3)'
+		      }
+		    }, 20)
+		  },
+		  methods: {
+		    show () { /* 打开对话框 */
+		      this.visible = true
+		    },
+		    hidden () { /* 关闭对话框 */
+		      this.visible = false
+		    },
+		    onCancel () { /* 点击取消 */
+		      this.$emit('cancel')
+		      this.hidden()
+		    },
+		    onOk () { /* 点击确认 */
+		      this.$emit('ok')
+		      this.hidden()
+		    }
+		  }
+	}
+</script>
+<style>
+	.shadow-wrapper{
+		
+		position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  bottom: 0;
+		  background: rgba(0,0,0,0.3);
+	}
+	.dialog-wrapper  {
+		 position: fixed;
+		 top: 30%;
+		 left: 13%;
+		 width: 558rpx;
+		 height: 404rpx;
+		 word-break: break-all;
+		 box-shadow: 0 0 5px #ccc;
+		 background-color: #FFFFFF;
+		
+	}
+	.title{
+		position: absolute;
+		top: 50rpx;
+		left: 220rpx;
+		width: 100rpx;
+		height: 34rpx;
+		font-size: 36rpx;
+		text-align: center;
+		color: #333333;
+		font-size: 36rpx;
+	}
+	.info-wrapper{
+		width: 416rpx;
+		height: 94rpx;
+		margin-top: 120rpx;
+		margin-left: 71rpx;
+		word-break: break-all;
+	}
+	.text{
+		
+		margin-top: 30rpx;
+		line-height: 64rpx;
+		color: #333333;
+		font-size: 36rpx;
+		word-break: break-all;
+	}
+	.btn-wrapper{
+		position: absolute;
+		bottom: 41rpx;
+		left: 71rpx;
+		height: 76rpx;
+		display: flex;
+		flex-direction: row;
+	}
+	.btn_cancle{
+		width: 180rpx;
+		height: 76rpx;
+		background-color: #EEEEEE;
+		color: #1E1E1E;
+		border-radius: 8rpx;
+		border-radius: 8rpx;
+		font-size: 32rpx;
+		line-height: 76rpx;
+	}
+	.btn_ok{
+		width: 180rpx;
+		height: 76rpx;
+		background-color: #E71E25;
+		margin-left: 66rpx;
+		color: #FFFEFE;
+		border-radius: 8rpx;
+		font-size: 32rpx;
+		line-height: 76rpx;
+	}
+	.box{
+		
+	}
+</style>
+
