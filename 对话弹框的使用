@@ -1,0 +1,55 @@
+<template>
+ <view class="submit_all">
+			<div class="dia-apply" @click="isclick">
+			    <div class="operation">
+			      <div class="btn" @click="open">交卷</div>
+			    </div>
+			    <submit-dialog ref="dialog"
+				        :title="title"
+			            :info="info"
+			            :icon="icon"
+			            :mask="mask"
+			            :cancelText="cancelText"
+			            :okText="okText"
+			            @cancel="onCancel"
+			            @ok="onOk"
+			    ></submit-dialog>
+			  </div>
+		</view>
+</template>
+
+<script type='text/ecmascript-6'>
+import Dialog from 'base/dialog'
+export default {
+  data () {
+    return {
+      title: '提示',
+      info: '确定要删除此项吗？',
+      icon: 'question',
+      cancelText: '取消',
+      okText: '确定',
+      mask: true
+    }
+  },
+  methods: {
+    open () {
+      this.$refs.dialog.show()
+    },
+    close () {
+      this.$refs.dialog.hidden()
+    },
+    onCancel () {
+      console.log('已取消')
+    },
+    onOk () {
+      console.log('已确定')
+    },
+    isclick () { /* 测试是否冒泡 */
+      console.log('事件冒泡啦')
+    }
+  },
+  components: {
+   submitDialog
+  }
+}
+</script>
